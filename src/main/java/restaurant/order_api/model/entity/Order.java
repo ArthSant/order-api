@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import restaurant.order_api.model.dto.OrderDTO;
 import restaurant.order_api.util.OrderStatus;
 
 import java.util.ArrayList;
@@ -23,11 +24,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private List<Long> itensID = new ArrayList<>();
+    private List<Long> itens = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     private Double total;
+
+    public Order(OrderDTO dto) {
+        this.itens.addAll(dto.itens());
+        this.status = OrderStatus.RECEIVED;
+        this.total = dto.total();
+    }
 
 }
